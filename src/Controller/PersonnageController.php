@@ -21,7 +21,15 @@ class PersonnageController extends AbstractController
      */
     public function persos()
     {
-        return $this->render('personnage/persos.html.twig');
+        return $this->render('personnage/persos.html.twig',[
+            "pseudo" => "toto",
+            "age" => 25,
+            "carac" => [
+                "force" => 3,
+                "agi" => 2,
+                "intel" => 3
+            ]
+        ]);
     }
 }
 

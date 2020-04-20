@@ -1,7 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PersonnageController!{% endblock %}
+{% block title %}Les personnages{% endblock %}
+
+{% block monTitre %}
+Liste des personnages
+{% endblock %}
+
 
 {% block body %}
-<h1>Liste des personnages</h1>
+    <div>Pseudo: {{ pseudo }}</div>
+    <div>Age: {{ age }}</div>
+    <div>Force: {{ carac.force }}</div>
+    <div>Agilité: {{ carac.agi }}</div>
+    <div>Intelligence: {{ carac.intel }}</div>
 {% endblock %}
