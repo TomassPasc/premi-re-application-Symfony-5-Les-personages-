@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PersonnageController extends AbstractController
 {
     /**
-     * @Route("/personnage", name="personnage")
+     * @Route("/", name="accueil")
      */
     public function index()
     {
@@ -17,7 +17,7 @@ class PersonnageController extends AbstractController
 
 
     /**
-     * @Route("/persos", name="persos")
+     * @Route("/persos", name="personnages")
      */
     public function persos()
     {
