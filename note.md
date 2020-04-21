@@ -104,3 +104,63 @@ installation du starter bootstrap et javascript
 </html>
 ```
 
+17 twig tableau asso
+
+->controller:
+
+
+
+```php
+  public function persos()
+
+  {
+
+​    return $this->render('personnage/persos.html.twig',[
+
+​      "pseudo" => "toto",
+
+​      "age" => 25,
+
+​      "carac" => [
+
+​        "force" => 3,
+
+​        "agi" => 2,
+
+​        "intel" => 3
+
+​      ]
+
+​    ]);
+
+  }
+```
+
+vue:
+
+```twig
+{% block body %}
+
+    <div>Pseudo: {{ pseudo }}</div>
+
+    <div>Age: {{ age }}</div>
+
+    <div>Force: {{ carac.force }}</div>
+
+    <div>Agilité: {{ carac.agi }}</div>
+
+    <div>Intelligence: {{ carac.intel }}</div>
+
+{% endblock %}
+```
+
+18. Twig et routes.
+
+    dans le fichier menu.html.twig. On utilise le name de la route créer dans le controller. Cela de pouvoir changer le chemin sans tout modifier. 
+
+Pour les liens utiliser cette méthode pour le href
+
+```
+  <a class="navbar-brand" href="{{ path("accueil") }}">Le site</a>
+```
+
