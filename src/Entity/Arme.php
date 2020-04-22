@@ -25,6 +25,14 @@ class Arme{
         $arme3 = new Arme("arc", "une arme à distance", 7);
     }
 
+    public function getArmeParNom($name){
+        foreach (self::$armes as $arme) {
+            if ($arme->name === $name){
+                return $arme;
+            }
+        }
+    }
+
 
 
 }
