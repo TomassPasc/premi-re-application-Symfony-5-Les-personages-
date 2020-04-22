@@ -38,4 +38,12 @@ class Personnage{
                     "intel" => 1
                 ]);   
     }
+
+    public static function getPersonnageParNom($pseudo){
+        foreach (self::$personnages as $perso){
+            if (strtolower($perso->pseudo) === $pseudo) {  //le nom de getP.... est égale au pseudo du tableau personnages 
+                    return $perso;     
+            }
+        }
+    }
 }

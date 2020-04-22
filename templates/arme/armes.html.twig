@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les armes{% endblock %}
+
+{% block monTitre %}
+Les armes
+{% endblock %}
+
+{% block body %}
+
+{% for artillerie in artilleries %}
+<div class="row justify-content-between">
+    <div class="col-4">
+        <img src="{{asset('images/armes/' ~artillerie.name~ '.png')}}">
+    </div>
+    <div class="col-4">
+        {{ artillerie.name}}
+    </div>
+
+</div>
+
+{% endfor %}
+{% endblock %}
