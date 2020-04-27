@@ -22,7 +22,7 @@ class ArmeController extends AbstractController
     /**
      * * @Route("/armes/{nom}", name="afficher_arme")
      */
-    public function afficherArme($nom)
+    public function afficherArme($nom) //on recupère le {nom} de la route
     {   
         Arme::creerArme();
         $artillerie = Arme::getArmeParNom($nom);

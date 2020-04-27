@@ -1,3 +1,5 @@
+
+
 # Note pour la première application 
 
 <u>Initiation du projet 1:</u>
@@ -164,3 +166,360 @@ Pour les liens utiliser cette méthode pour le href
   <a class="navbar-brand" href="{{ path("accueil") }}">Le site</a>
 ```
 
+19.fichier "client": image et css
+
+fivhier persos.html.twig:
+
+<div><img src="{{ asset("images/personnages/Milo.png")}}"></div>
+
+<div><img src="/images/personnages/Marc.png"> </div>
+
+
+
+symfony sait que quand un fichier client doit être envoyé il doit aller le trouver dans "public"
+
+dossier public/css:
+
+main.css
+
+```css
+body{
+
+  background: red;
+
+}
+```
+
+le relier à base.html.twig:
+
+<link rel="stylesheet" href="{{ asset("css/main.css")}}">
+
+
+
+20 Lister les persos sous forme d'un tableau
+
+persos.html.twig
+
+```twig
+
+
+{% block body %}
+
+<table class="table">
+
+  <tr class="thread-dark">
+
+​    <th>Image</th>
+
+​    <th>Nom</th>
+
+​    <th>Age</th>
+
+​    <th>Sexe</th>
+
+​    <th>Force</th>
+
+​    <th>Agilité</th>
+
+​    <th>Intelligence</th>
+
+  </tr>
+
+  {% for player in players %}
+
+​    <tr>
+
+​      <td><img src="{{asset('images/personnages/' ~ player.pseudo ~ '.png')}}"</td>
+
+​      <td>{{ player.pseudo }}</td>
+
+​      <td>{{ player.age }}</td>
+
+​      <td>
+
+​        {% if player.sexe %}
+
+​          Homme
+
+​        {% else %}
+
+​          Femme
+
+​        {% endif %}
+
+​      </td>
+
+​      <td>{{ player.carac.force }}</td>
+
+​      <td>{{ player.carac.agi }}</td>
+
+​      <td>{{ player.carac.intel }}</td>
+
+​      
+
+
+
+
+
+​    </tr>
+
+  {% endfor %}
+
+</table>
+
+
+
+{% endblock %}
+```
+
+PersoController:
+
+pub
+
+```php
+lic function persos()
+
+  {
+
+​    $perso1 = [
+
+​      "pseudo" => "Marc",
+
+​      "age" => 52,
+
+​      "sexe" => true,
+
+​      "carac" => [
+
+​        "force" => 3,
+
+​        "agi" => 2,
+
+​        "intel" => 3
+
+​        ]
+
+​      ];
+
+​    
+
+​      $perso2 = [
+
+​        "pseudo" => "Milo",
+
+​        "age" => 12,
+
+​        "sexe" => true,
+
+​        "carac" => [
+
+​          "force" => 6,
+
+​          "agi" => 7,
+
+​          "intel" => 1
+
+​          ]
+
+​        ];
+
+
+
+​      $perso3 = [
+
+​        "pseudo" => "Tya",
+
+​        "age" => 25,
+
+​        "sexe" => false,
+
+​        "carac" => [
+
+​          "force" => 3,
+
+​          "agi" => 9,
+
+​          "intel" => 10
+
+​          ]
+
+​        ];
+
+​      
+
+​      $players = [
+
+​        "j1" => $perso1,
+
+​        "j2" => $perso2,
+
+​        "j3" => $perso3
+
+​      ];
+
+​    return $this->render('personnage/persos.html.twig',[
+
+​      "players" => $players
+
+​    ]);
+
+  }
+
+}
+```
+
+21. **<u>Passage en POO:</u>**
+
+Personnage.php dans entity:
+
+
+
+```php
+<?php
+
+
+
+namespace App\Entity;
+
+
+
+
+
+class Personnage{
+
+
+
+  public $pseudo;
+
+  public $age;
+
+  public $sexe;
+
+  public $carac = [];
+
+
+
+  public static $personnages=[];
+
+
+
+  public function __construct($pseudo, $age, $sexe, $carac){
+
+​    $this->pseudo = $pseudo;
+
+​    $this->age = $age;
+
+​    $this->sexe = $sexe;
+
+​    $this->carac = $carac;
+
+​    self::$personnages[] = $this;
+
+  }
+
+
+
+  public static function creerPersonnages(){
+
+​    $p1 = new Personnage("Marc", 52, true, [
+
+​        "force" => 3,
+
+​        "agi" => 2,
+
+​        "intel" => 3
+
+​      ]);
+
+
+
+​    $p2 = new Personnage("Milo", 63, true, [
+
+​          "force" => 8,
+
+​          "agi" => 1,
+
+​          "intel" => 6
+
+​        ]);
+
+​    $p3 = new Personnage("Tya", 32, false, [
+
+​          "force" => 8,
+
+​          "agi" => 3,
+
+​          "intel" => 1
+
+​        ]);  
+
+  }
+
+}
+```
+
+controller:
+
+```
+  public function persos()
+
+  {
+
+​    Personnage::creerPersonnages();
+
+​    
+
+​    return $this->render('personnage/persos.html.twig',[
+
+​      "players" => Personnage::$personnages
+
+​    ]);
+
+  }
+
+}
+```
+
+22. GET:
+
+    perso.html.twig:
+
+    permet de rendre le lien cliquable avec la route créée dans le routeur.
+
+    ```
+    <td><a href="{{ path('afficher_personnage', {'pseudo' : player.pseudo}) }}">{{ player.pseudo }}</td>
+    ```
+
+    pseudo lié par {pseudo} dans le controller et {'pseudo' : player.pseudo}
+
+    controller:
+
+    ```
+        /**
+    
+       \* @Route("/persos/{pseudo}", name="afficher_personnage")
+    
+       */
+    
+      public function afficherPerso($pseudo)
+    
+      {
+    
+    ​    Personnage::creerPersonnages();
+    
+    ​    
+    
+    ​    return $this->render('personnage/perso.html.twig',[
+    
+    ​      "pseudo" => $pseudo
+    
+    ​    ]);
+    
+      }
+    
+    
+    
+    }
+    ```
+
+    
